@@ -25,7 +25,28 @@ routes.post('/address', upload.single('file'), AdressController.store)
 
 routes.post('/sendPasswordResetEmail', EmailConfigController.sendPasswordResetEmail)
 
+
 routes.put('/users/updateSenha', userController.updateSenha)
-;
+
+routes.get('/address/:id', AdressController.show);
+
+// Rota para atualizar um endereço por ID
+routes.put('/address/:id', AdressController.update);
+
+// Rota para excluir um endereço por ID
+routes.delete('/address/:id', AdressController.destroy);
+
+
+routes.get('/moviments', MovimentsController.index);
+
+// Rota para obter um movimento por ID
+routes.get('/moviments/:id', MovimentsController.show);
+
+// Rota para atualizar um movimento por ID
+routes.put('/moviments/:id', MovimentsController.update);
+
+// Rota para excluir um movimento por ID
+routes.delete('/moviments/:id', MovimentsController.destroy);
+
 
 module.exports = routes

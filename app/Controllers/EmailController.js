@@ -89,7 +89,7 @@ class EmailConfigController {
           
         } catch (error) {
           console.error('Erro durante a geração do token:', error);
-          throw error; // Rethrow a exceção para que possa ser tratada no chamador, se necessário
+          throw error; 
         }
       }
     
