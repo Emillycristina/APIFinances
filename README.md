@@ -62,20 +62,28 @@ A API estará disponível em http://localhost:3030.
 
 ## Rotas
 
-Autenticação
+## Criação de Usuários
 
-POST /auth/register: Registrar um novo usuário
-POST /auth/login: Efetuar login e obter token JWT
+POST /users
+
+## Autenticação
+
+
+POST /sessions: Efetuar login e obter token JWT
+
 
 ## Movimentações Financeiras
 
-GET /transactions: Obter todas as movimentações do usuário autenticado
+GET /moviments/:id  Obter  as movimentações do usuário autenticado por ID.
 
-POST /transactions: Adicionar uma nova movimentação financeira
+GET /moviments Obter todas as movimentações financeiras.
 
-DELETE /transactions/:id: Excluir uma movimentação específica pelo ID
+POST/moviments/:id Adicionar uma nova movimentação financeira
+
+DELETE/moviments/:id Excluir uma movimentação específica pelo ID
 
 ## Upload de Arquivos
+
 POST /upload: Fazer upload de um arquivo (por exemplo, um recibo)
 
 ## Exemplos de Uso
