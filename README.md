@@ -33,6 +33,12 @@ git clone https://github.com/seu-usuario/api-financeira.git
 cd APIFinanceira
 npm install
 ```
+## Execute as migrações do Sequelize:
+
+```
+npx sequelize-cli db:migrate`
+```
+
 
 ## Configure as variáveis de ambiente:
 Crie um arquivo .env na raiz do projeto e defina as seguintes variáveis:
