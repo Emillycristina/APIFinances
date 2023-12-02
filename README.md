@@ -56,8 +56,9 @@ Substitua os valores conforme necessário.
 Execute a aplicação em modo desenvolvedor:
 ```
 npm run dev
-A API estará disponível em http://localhost:3030.
+
 ```
+A API estará disponível em http://localhost:3030.
 
 ## Rotas
 
