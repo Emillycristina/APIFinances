@@ -53,9 +53,9 @@ EMAIL_PASS=suaSenha
 ```
 Substitua os valores conforme necessário.
 
-Execute a aplicação:
+Execute a aplicação em modo desenvolvedor:
 ```
-npm start
+npm run dev
 A API estará disponível em http://localhost:3030.
 ```
 
