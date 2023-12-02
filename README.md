@@ -30,7 +30,7 @@ git clone https://github.com/seu-usuario/api-financeira.git
 ```
 ## Instale as dependências:
 ```
-cd api-financeira
+cd APIFinanceira
 npm install
 ```
 
@@ -59,17 +59,22 @@ Autenticação
 
 POST /auth/register: Registrar um novo usuário
 POST /auth/login: Efetuar login e obter token JWT
-Movimentações Financeiras
+
+## Movimentações Financeiras
+
 GET /transactions: Obter todas as movimentações do usuário autenticado
+
 POST /transactions: Adicionar uma nova movimentação financeira
+
 DELETE /transactions/:id: Excluir uma movimentação específica pelo ID
-Upload de Arquivos
+
+## Upload de Arquivos
 POST /upload: Fazer upload de um arquivo (por exemplo, um recibo)
 
-Exemplos de Uso
+## Exemplos de Uso
 
-Registro de Usuário
-http
+## Registro de Usuário
+
 
 ```
 POST /auth/register
