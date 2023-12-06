@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import Moviments from '../Models/Moviments';
+const { isDate, parse } = require('date-fns');
 
 class MovimentsController {
   // Operação Create: Armazenar um novo movimento
@@ -12,43 +13,40 @@ class MovimentsController {
     });
 
     const { descricao, tipo, data, valor } = request.body;
-
+    
     try {
-      await schema.validateSync(request.body, { abortEarly: false });
-    } catch (err) {
-      console.error(err);
-      
-      const validationErrors = err.inner.map((error) => {
-        return {
-          field: error.path,
-          message: error.message,
-        };
-      });
-      
-      return response.status(400).json({ errors: validationErrors });
-    }
-
-    try {
-      // Criar um novo movimento no banco de dados
-      const movimento = await Moviments.create({
+      await schema.validate(request.body, { abortEarly: false });
+  
+    
+       const movimento = await Moviments.create({
         descricao,
         tipo,
         data,
         valor,
       });
-
+  
       // Responder com o movimento criado
       return response.status(201).json(movimento);
-    } catch (error) {
-      // Responder com erro se houver um problema durante a criação do movimento
-      return response.status(500).json({ error: 'Erro ao criar movimento', details: error.message });
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const validationErrors = err.inner.map((error) => {
+          return {
+            field: error.path,
+            message: error.message,
+          };
+        });
+        
+        return response.status(400).json({ errors: validationErrors });
+      }
+  
+      return response.status(500).json({ error: 'Erro ao criar movimento', details: err.message });
     }
   }
 
   // Operação Read (Index): Obter todos os movimentos
   async index(request, response) {
     try {
-      const moviments = await Moviments.find();
+      const moviments = await Moviments.findAll();
       return response.json({ moviments });
     } catch (error) {
       console.error('Error fetching moviments:', error);
@@ -62,7 +60,7 @@ class MovimentsController {
 
     try {
       // Procurar o movimento no banco de dados pelo ID
-      const moviment = await Moviments.findById(id);
+      const moviment = await Moviments.findByPk(id);
 
       // Responder com o movimento encontrado ou mensagem de erro se não encontrado
       if (!moviment) {
@@ -103,17 +101,20 @@ class MovimentsController {
     }
 
     try {
-      // Atualizar o movimento no banco de dados
-      const updatedMoviment = await Moviments.findByIdAndUpdate(
-        id,
-        { ...request.body },
-        { new: true }
-      );
+      // Verificar se o movimento existe
+      const existingMoviment = await Moviments.findByPk(id);
 
-      // Responder com o movimento atualizado ou mensagem de erro se não encontrado
-      if (!updatedMoviment) {
+      if (!existingMoviment) {
         return response.status(404).json({ error: 'Movimento não encontrado' });
       }
+
+      
+
+      await existingMoviment.update({ ...request.body});
+
+
+      // Recuperar o movimento atualizado
+      const updatedMoviment = await Moviments.findByPk(id);
 
       return response.json(updatedMoviment);
     } catch (error) {
@@ -127,14 +128,18 @@ class MovimentsController {
     const { id } = request.params;
 
     try {
-      // Excluir o movimento no banco de dados
-      const deletedMoviment = await Moviments.findByIdAndDelete(id);
-
-      // Responder com mensagem de sucesso ou erro se o movimento não for encontrado
-      if (!deletedMoviment) {
+      // Encontrar e excluir o movimento no banco de dados pelo ID
+      const deletedRows = await Moviments.destroy({
+        where: {
+          id: id
+        }
+      });
+  
+      // Verificar se algum registro foi excluído
+      if (deletedRows === 0) {
         return response.status(404).json({ error: 'Movimento não encontrado' });
       }
-
+  
       return response.json({ message: 'Movimento excluído com sucesso' });
     } catch (error) {
       // Responder com erro se houver um problema durante a exclusão do movimento

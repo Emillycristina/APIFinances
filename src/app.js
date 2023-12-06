@@ -1,5 +1,6 @@
 const express = require('express');
 const routes = require('./routes');
+const convertDateMiddleware = require('../app/Controllers/ConverterDate')
 
 import './database'
 
@@ -15,6 +16,7 @@ class App {
 
   middlewares() {
     this.app.use(express.json());
+    this.app.use(convertDateMiddleware);
   }
 
   routes() {

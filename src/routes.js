@@ -1,5 +1,6 @@
 const {Router} = require('express')
 
+
 import multer from 'multer'
 import multerConfig from './config/multer'
 import userController from '../app/Controllers/userController'
@@ -22,20 +23,24 @@ routes.post('/moviments', MovimentsController.store)
 
 routes.post('/address', upload.single('file'), AdressController.store)
 
+routes.put('/address/:id', upload.single('file'), AdressController.update)
+
 
 routes.post('/sendPasswordResetEmail', EmailConfigController.sendPasswordResetEmail)
 
 
 routes.put('/users/updateSenha', userController.updateSenha)
 
+
 routes.get('/address/:id', AdressController.show);
 
 // Rota para atualizar um endereço por ID
-routes.put('/address/:id', AdressController.update);
+;
 
 // Rota para excluir um endereço por ID
 routes.delete('/address/:id', AdressController.destroy);
 
+routes.get('/address', MovimentsController.index);
 
 routes.get('/moviments', MovimentsController.index);
 

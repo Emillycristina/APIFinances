@@ -51,7 +51,7 @@ class EmailConfigController {
 
           const baseUrl= 'https://finances-front-gilt.vercel.app/ForgotPassword'
           // Construa o link de redefinição de senha
-          const resetLink = `${baseUrl}?token=${resetToken}`;
+          const resetLink = `${baseUrl}?token=${resetToken.toString()}`;
     
           // Envie o e-mail com o link de redefinição de senha
           try {

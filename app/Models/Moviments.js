@@ -1,5 +1,7 @@
 import Sequelize, { Model } from "sequelize";
 
+
+
 class Moviments extends Model {
   static init(sequelize) {
     super.init(
@@ -13,10 +15,17 @@ class Moviments extends Model {
         sequelize,
         tableName: 'moviments',
       }
+      
     );
+    
 
     return this;
+    }
+
+    
+    
+    
   }
-}
+
 
 export default Moviments;
