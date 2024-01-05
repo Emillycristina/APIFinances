@@ -1,8 +1,9 @@
 const express = require('express');
+const passport = require('../app/Controllers/Passport'); // Substitua pelo caminho real do seu arquivo Passport.js
 const routes = require('./routes');
-const convertDateMiddleware = require('../app/Controllers/ConverterDate')
+const convertDateMiddleware = require('../app/Controllers/ConverterDate');
 
-import './database'
+import './database';
 
 require('dotenv').config();
 
@@ -17,6 +18,7 @@ class App {
   middlewares() {
     this.app.use(express.json());
     this.app.use(convertDateMiddleware);
+    this.app.use(passport.initialize()); // Adicione esta linha para inicializar o Passport.js
   }
 
   routes() {

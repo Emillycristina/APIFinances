@@ -1,9 +1,10 @@
 import * as Yup from 'yup';
 import Moviments from '../Models/Moviments';
-const { isDate, parse } = require('date-fns');
+
+
 
 class MovimentsController {
-  // Operação Create: Armazenar um novo movimento
+  
   async store(request, response) {
     const schema = Yup.object().shape({
       descricao: Yup.string().required(),
@@ -12,20 +13,34 @@ class MovimentsController {
       valor: Yup.number().required(),
     });
 
-    const { descricao, tipo, data, valor } = request.body;
+    ;
+
+    
+     
     
     try {
       await schema.validate(request.body, { abortEarly: false });
-  
+
+      const { descricao, tipo, data, valor } = request.body;
+      const userId = request.body.userId
+      
+      console.log('userId:', userId);
+
+      console.log('Request payload:', request.body);
+
     
        const movimento = await Moviments.create({
         descricao,
         tipo,
         data,
         valor,
-      });
+        userId: userId,
+       }, {
+          logging: console.log,
+        }
+      );
   
-      // Responder com o movimento criado
+      
       return response.status(201).json(movimento);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
@@ -43,11 +58,14 @@ class MovimentsController {
     }
   }
 
-  // Operação Read (Index): Obter todos os movimentos
+
   async index(request, response) {
+    const userId = request.body.userId;
     try {
-      const moviments = await Moviments.findAll();
-      return response.json({ moviments });
+      const movimento = await Moviments.findAll({
+        where: { userId: userId },
+      });
+      return response.json({ movimento });
     } catch (error) {
       console.error('Error fetching moviments:', error);
       return response.status(500).json({ error: 'Internal server error' });
@@ -57,17 +75,23 @@ class MovimentsController {
   // Operação Read (Show): Obter um movimento por ID
   async show(request, response) {
     const { id } = request.params;
+    const userId = request.body.userId;
 
     try {
       // Procurar o movimento no banco de dados pelo ID
-      const moviment = await Moviments.findByPk(id);
+      const movimento = await Moviments.findOne({
+        where: {
+          id: id,
+          userId: userId,
+        },
+      });;
 
       // Responder com o movimento encontrado ou mensagem de erro se não encontrado
-      if (!moviment) {
+      if (!movimento) {
         return response.status(404).json({ error: 'Movimento não encontrado' });
       }
 
-      return response.json({ moviment });
+      return response.json({ movimento });
     } catch (error) {
       console.error('Error fetching moviment:', error);
       return response.status(500).json({ error: 'Internal server error' });
@@ -77,6 +101,7 @@ class MovimentsController {
   // Operação Update: Atualizar um movimento por ID
   async update(request, response) {
     const { id } = request.params;
+    const userId = request.body.userId;
 
     const schema = Yup.object().shape({
       descricao: Yup.string(),
@@ -102,7 +127,13 @@ class MovimentsController {
 
     try {
       // Verificar se o movimento existe
-      const existingMoviment = await Moviments.findByPk(id);
+      const existingMoviment = await Moviments.findOne({
+        where: {
+          id: id,
+          userId: userId,
+        },
+      });
+  
 
       if (!existingMoviment) {
         return response.status(404).json({ error: 'Movimento não encontrado' });
@@ -126,14 +157,16 @@ class MovimentsController {
   // Operação Delete: Excluir um movimento por ID
   async destroy(request, response) {
     const { id } = request.params;
+    const userId = request.body.userId;
 
     try {
       // Encontrar e excluir o movimento no banco de dados pelo ID
       const deletedRows = await Moviments.destroy({
         where: {
-          id: id
-        }
-      });
+          id: id,
+          userId: userId,
+        },
+      })
   
       // Verificar se algum registro foi excluído
       if (deletedRows === 0) {

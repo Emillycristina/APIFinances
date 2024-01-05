@@ -2,7 +2,9 @@
 const app = require('./app');
 const PORT = process.env.PORT || 3030;
 const cors = require('cors');
+const passport = require('../app/Controllers/Passport');
 
+app.use(passport.initialize());
 
 app.use(cors({
   origin: '*',  // Substitua pelo seu domínio permitido

@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import Address from '../Models/Address';
-import multerConfig from '../../src/config/multer';
+//import multerConfig from '../../src/config/multer';
 import { v4 as uuidv4 } from 'uuid';
 
 class AddressController {
@@ -20,6 +20,7 @@ class AddressController {
       await addressSchema.validate(request.body, { abortEarly: false });
 
       const { cep, uf, logradouro, bairro, cidade, telefone, nomeCompleto, email } = request.body;
+      const userId = request.body.userId;
 
       const userImage = request.file.filename;
 
@@ -34,6 +35,7 @@ class AddressController {
         nomeCompleto,
         email,
         userImage,
+        userId: userId,
       });
 
       return response.status(201).json({ address });
@@ -50,8 +52,19 @@ class AddressController {
   }
 
   async index(request, response) {
+    console.log('User:', request.user); 
     try {
-      const addresses = await Address.findAll();
+      
+      const userId = request.user ? request.user.id : null;
+
+      if (!userId) {
+        return response.status(401).json({ error: 'Usuário não autenticado' });
+      }
+
+    const addresses = await Address.findAll({
+      where: { userId: userId },
+    });
+
       return response.json({ addresses });
     } catch (error) {
       console.error('Error fetching addresses:', error);
@@ -62,9 +75,15 @@ class AddressController {
 
   async show(request, response) {
     const { id } = request.params;
+    const userId = request.body.userId;
 
     try {
-      const address = await Address.findByPk(id);
+      const address = await Address.findOne({
+        where: {
+          id: id,
+          userId: userId,
+        },
+      });;
 
       if (!address) {
         return response.status(404).json({ error: 'Endereço não encontrado' });
@@ -80,6 +99,7 @@ class AddressController {
 
   async update(request, response) {
     const { id } = request.params;
+    const userId = request.body.userId;
 
     const addressSchema = Yup.object().shape({
       cep: Yup.string().required(),
@@ -111,7 +131,7 @@ class AddressController {
       // Verificar se o endereço existe
       const existingAddress = await Address.findByPk(id);
     
-      if (!existingAddress) {
+      if (!existingAddress || existingAddress.userId !== userId) {
         return response.status(404).json({ error: 'Endereço não encontrado' });
       }
     
@@ -134,7 +154,7 @@ class AddressController {
         // Atualizar o caminho da imagem
         imagePath = request.file.path;
     
-        // Se desejar, você pode excluir a imagem anterior aqui
+        
          fs.unlinkSync(existingAddress.imagePath);
       }
     
@@ -167,9 +187,16 @@ class AddressController {
 
   async destroy(request, response) {
     const { id } = request.params;
+    
 
     try {
-      const deletedAddress = await Address.findByIdAndDelete(id);
+      const userId = request.body.userId; // Assumindo que você tenha a informação do usuário autenticado disponível
+      const deletedAddress = await Address.destroy({
+        where: {
+          id: id,
+          userId: userId,
+        },
+      });
 
       if (!deletedAddress) {
         return response.status(404).json({ error: 'Endereço não encontrado' });

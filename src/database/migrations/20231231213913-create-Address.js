@@ -45,6 +45,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      userId: { // Foreign key column
+        type: Sequelize.UUID,
+        references: {
+          model: 'users', // Name of the referenced table
+          key: 'id' // Primary key of the referenced table
+        },
+        allowNull: false
+      },
        createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -54,9 +62,24 @@ module.exports = {
         allowNull: false,
       },
     });
+    await queryInterface.addConstraint('Addresses', {
+      fields: ['userId'],
+      type: 'foreign key',
+      name: 'fk_moviments_user', // Give a name to your foreign key constraint
+      references: {
+        table: 'users',
+        field: 'id'
+      },
+      onDelete: 'cascade', // Set the appropriate action for onDelete
+      onUpdate: 'cascade' // Set the appropriate action for onUpdate
+    });
   },
+
+  
+  
 
   down: async (queryInterface) => {
     await queryInterface.dropTable('Addresses');
   },
-};
+
+}

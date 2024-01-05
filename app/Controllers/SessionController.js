@@ -15,7 +15,7 @@ class SessionController {
     });
 
     const userEmailOrPasswordIncorrect = () => {
-      return response.status(480).json({ error: 'Make sure password or email are correct' });
+      return response.status(401).json({ error: 'Make sure password or email are correct' });
     };
 
     try {

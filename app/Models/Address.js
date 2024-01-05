@@ -1,28 +1,35 @@
-import { Model, DataTypes } from 'sequelize';
+import Sequelize, { Model } from "sequelize";
+import User from './User';
 
 class Address extends Model {
   static init(sequelize) {
     super.init(
       {
-        cep: DataTypes.STRING,
-        uf: DataTypes.STRING,
-        logradouro: DataTypes.STRING,
-        bairro: DataTypes.STRING,
-        cidade: DataTypes.STRING,
-        telefone: DataTypes.STRING,
-        nomeCompleto: DataTypes.STRING,
-        email: DataTypes.STRING,
-        userImage: DataTypes.STRING,
+        cep: Sequelize.STRING,
+        uf: Sequelize.STRING,
+        logradouro: Sequelize.STRING,
+        bairro: Sequelize.STRING,
+        cidade: Sequelize.STRING,
+        telefone: Sequelize.STRING,
+        nomeCompleto: Sequelize.STRING,
+        email: Sequelize.STRING,
+        userImage: Sequelize.STRING,
+        userId: Sequelize.INTEGER, // Add a foreign key field
        },
          // Coluna para a URL da imagem do usuário
       {
         sequelize,
+        tableName: 'Addresses',
       }
     );
 
     return this;
-  }
+  }  
 
+  static associate(models) {
+    // Create associations here
+    this.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
+  }
  
   }
 
