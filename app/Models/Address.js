@@ -20,6 +20,9 @@ class Address extends Model {
       {
         sequelize,
         tableName: 'Addresses',
+        timestamps: true, // Se quiser usar created_at e updated_at
+        underscored: true,
+        underscoredAll: true,
       }
     );
 

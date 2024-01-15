@@ -21,6 +21,9 @@ class Moviments extends Model {
       {
         sequelize,
         tableName: 'moviments',
+        timestamps: true, // Se quiser usar created_at e updated_at
+        underscored: true,
+        underscoredAll: true,
       }
     );
 

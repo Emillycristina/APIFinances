@@ -1,17 +1,18 @@
 require('dotenv').config();
 
 module.exports = {
- 
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    host: process.env.DB_HOST,
-    dialect: 'postgres',
-    define:{
-      timespamps: true,
-      undescored: true,
-      undescoredAll: true,
-    },
- 
-  // Você pode adicionar configurações para produção e teste também
+  /* username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT, */ 
+  url: process.env.DB_URL,
+  dialect: 'postgres',
+  define: {
+    timestamps: true,
+    underscored: true,
+    underscoredAll: true,
+  },
+  
 };
+

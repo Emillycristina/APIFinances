@@ -13,6 +13,9 @@ class User extends Model {
     {
       sequelize,
       tableName: 'Users',
+      timestamps: true,
+      underscored: true,
+      underscoredAll: true,
     }
      )
 

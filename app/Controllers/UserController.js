@@ -61,7 +61,7 @@ class UserController {
       return response.json(user);
     } catch (error) {
       console.error('Erro ao buscar dados de usuário e endereço:', error);
-      return response.status(500).json({ error: 'Erro do servidor' });
+      return response.status(500).json({ error: 'Erro do servidor',  details: err.message });
     }
   }
 

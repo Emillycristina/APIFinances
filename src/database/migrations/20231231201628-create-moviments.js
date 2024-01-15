@@ -29,7 +29,7 @@ module.exports = {
       userId: { // Foreign key column
         type: Sequelize.UUID,
         references: {
-          model: 'users', // Name of the referenced table
+          model: 'Users', // Name of the referenced table
           key: 'id' // Primary key of the referenced table
         },
         allowNull: false
@@ -50,7 +50,7 @@ module.exports = {
       type: 'foreign key',
       name: 'fk_moviments_user', // Give a name to your foreign key constraint
       references: {
-        table: 'users',
+        table: 'Users',
         field: 'id'
       },
       onDelete: 'cascade', // Set the appropriate action for onDelete
