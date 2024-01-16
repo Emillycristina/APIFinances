@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec sucrase-node src/server.js",
-    "start": "node -r sucrase/register ./src/server.js"
+    "start": "nodemon --exec sucrase-node src/server.js"
   },
   "keywords": [],
   "author": "",
