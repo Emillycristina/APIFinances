@@ -3,7 +3,7 @@ const {Router} = require('express')
 
 import multer from 'multer'
 import multerConfig from './config/multer'
-import userController from '../app/Controllers/userController'
+import userController from '../app/Controllers/UserController'
 import SessionController from '../app/Controllers/SessionController'
 import MovimentsController from '../app/Controllers/MovimentsController'
 import AdressController from '../app/Controllers/AdressController'
