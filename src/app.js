@@ -3,7 +3,7 @@ const passport = require('../app/Controllers/Passport'); // Substitua pelo camin
 const routes = require('./routes');
 const convertDateMiddleware = require('../app/Controllers/ConverterDate');
 
-import './database';
+require('./database');
 
 require('dotenv').config();
 
@@ -18,7 +18,7 @@ class App {
   middlewares() {
     this.app.use(express.json());
     this.app.use(convertDateMiddleware);
-    this.app.use(passport.initialize()); // Adicione esta linha para inicializar o Passport.js
+    this.app.use(passport.initialize()); 
   }
 
   routes() {
