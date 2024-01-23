@@ -4,9 +4,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Obtém as variáveis de ambiente necessárias para autenticação no Gmail
-const { GMAIL_USER_EMAIL, GMAIL_PASSWORD } = process.env;
-
 
 // Função para enviar e-mail de redefinição de senha
 const sendPasswordResetEmail = async (destinatario, resetLink) => {
@@ -21,13 +18,13 @@ const sendPasswordResetEmail = async (destinatario, resetLink) => {
      let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: GMAIL_USER_EMAIL, 
-        pass: GMAIL_PASSWORD 
-      }
+        user: process.env.GMAIL_USER_EMAIL, 
+        pass: process.env.GMAIL_PASSWORD,
+      },
     });
 
     let mailOptions = {
-      from: GMAIL_USER_EMAIL,
+      from: process.env.GMAIL_USER_EMAIL,
      // to: GMAIL_USER_EMAIL,
       to: destinatario,
       subject: 'Redefinição de Senha',
