@@ -7,9 +7,11 @@ const passport = require('../app/Controllers/Passport');
 app.use(passport.initialize());
 
 app.use(cors({
-  origin: '*',  // Substitua pelo seu domínio permitido
+  origin: '*',  
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
+  //credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 }));
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
