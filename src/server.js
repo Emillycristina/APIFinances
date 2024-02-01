@@ -5,7 +5,7 @@ const cors = require('cors');
 const passport = require('../app/Controllers/Passport');
 
 app.use(cors({
-  origin: '*',  
+  origin: 'http://localhost:3000',  
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   preflightContinue: false,
