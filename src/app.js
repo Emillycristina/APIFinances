@@ -19,6 +19,7 @@ class App {
     this.app.use(express.json());
     this.app.use(convertDateMiddleware);
     this.app.use(passport.initialize()); 
+    
   }
 
   routes() {
