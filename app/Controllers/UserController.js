@@ -76,9 +76,9 @@ class UserController {
         return response.status(400).json({ error: 'E-mail não encontrado na tabela de usuários.' });
       }
 
-      const hashedPassword = await bcrypt.hash(novaSenha, 10);
+      //const hashedPassword = await bcrypt.hash(novaSenha, 10);
       // Atualize a senha na tabela de usuários
-      user.password = hashedPassword;
+      user.password = novaSenha;
       await user.save(); // Substitua "senha" pelo nome do campo da sua tabela
 
       return response.status(200).json({ success: true, message: 'Senha atualizada com sucesso.' });
