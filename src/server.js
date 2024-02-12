@@ -5,18 +5,14 @@ const cors = require('cors');
 const passport = require('../app/Controllers/Passport');
 
 
-const addCustomHeaders = (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://finances-front-gilt.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type','Authorization')
-  res.header('Access-Control-Allow-Credentials', true);
- 
-  
-  
-  next();
+const corsOptions = {
+  origin: 'https://finances-front-gilt.vercel.app',
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 };
-app.use(cors());
-app.use(addCustomHeaders);
+
+app.use(cors(corsOptions));
 
 
 app.use(passport.initialize());
