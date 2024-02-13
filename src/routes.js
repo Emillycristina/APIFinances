@@ -21,7 +21,7 @@ routes.post('/users', userController.store)
 
 routes.put('/users/updateSenha', userController.updateSenha)
 
-routes.get('/sessions', SessionController.store)
+routes.post('/sessions', SessionController.store)
 
 routes.post('/sendPasswordResetEmail', EmailConfigController.sendPasswordResetEmail)
 
