@@ -9,8 +9,9 @@ const corsOptions = {
   origin: 'https://finances-front-gilt.vercel.app',
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-};
+  credentials: true,
+  optionsSuccessStatus: 204 
+}
 
 app.use(cors(corsOptions));
 
