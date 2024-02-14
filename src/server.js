@@ -6,7 +6,7 @@ const passport = require('../app/Controllers/Passport');
 
 
 const corsOptions = {
-  origin: 'https://finances-front-gilt.vercel.app',
+  origin: ['https://finances-front-gilt.vercel.app',' https://finances-front-gilt.vercel.app/Login'],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
