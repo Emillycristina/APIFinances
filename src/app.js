@@ -9,7 +9,7 @@ require('./database');
 require('dotenv').config();
 
 const corsOptions = {
-  origin: 'https://finances-front-gilt.vercel.app',
+  origin: ['https://finances-front-gilt.vercel.app', 'http://localhost:3000'],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
