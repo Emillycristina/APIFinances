@@ -43,7 +43,9 @@ class SessionController {
 
       const token = Jwt.sign({ id: user.id }, secret, { expiresIn: '5d' });
      
-
+      response.setHeader('Authorization', `Bearer ${token}`);
+      response.setHeader('User-Id', user.id);
+      
       return response.status(200).json({
         id: user.id,
         email,
